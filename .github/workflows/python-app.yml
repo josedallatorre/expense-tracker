@@ -1,23 +1,18 @@
-  changes:
-    name: test changed-files
+name: scp files
+on: [push]
+jobs:
+
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
-    - name: checkout
-      uses: actions/checkout@v3
-
-    - name: Get changed files
-      id: changed-files
-      uses: tj-actions/changed-files@v35
-      with:
-        since_last_remote_commit: true
-        separator: ","
-
-    - name: copy file to server
+    - uses: actions/checkout@v3
+    - name: copy file via ssh key
       uses: appleboy/scp-action@v0.1.4
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
-        source: ${{ steps.changed-files.outputs.all_changed_files }}
-        target: your_server_target_folder_path
+        password: ${{ secrets.PASSWORD }}
+        source: "/*"
+        target: /home/pi/projects/expense-tracker
