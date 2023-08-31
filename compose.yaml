@@ -9,11 +9,9 @@
 # https://github.com/docker/awesome-compose
 services:
   telegram_bot:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    environment:
-      TELEGRAM_BOT_TOKEN: ${TELEGRAMBOTTOKEN}
+    image: expense-tracker:latest
+    env_file:
+      - .env
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to
 # start the database before your application. The `db-data` volume persists the
