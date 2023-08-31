@@ -1,18 +1,1 @@
-name: scp files
-on: [push]
-jobs:
 
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: copy file via ssh key
-      uses: appleboy/scp-action@v0.1.4
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        port: ${{ secrets.PORT }}
-        password: ${{ secrets.PASSWORD }}
-        source: "/*"
-        target: /home/pi/projects/expense-tracker
