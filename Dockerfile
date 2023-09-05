@@ -43,8 +43,21 @@ USER appuser
 # Copy the source code into the container.
 COPY . .
 
+# Start and enable SSH
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends dialog \
+    && apt-get install -y --no-install-recommends openssh-server \
+    && echo "root:Docker!" | chpasswd \
+    && chmod u+x ./entrypoint.sh
+
+COPY sshd_config /etc/ssh/
+
+EXPOSE 8000 2222
+
+ENTRYPOINT [ "./entrypoint.sh" ]
+
 # Expose the port that the application listens on.
-EXPOSE 8000
+EXPOSE 8080
 
 # Run the application.
 CMD python3 main.py
