@@ -4,10 +4,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-CUSTOMCONNSTR_TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
+TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
 
 
-bot = telebot.TeleBot(CUSTOMCONNSTR_TELEGRAM_BOT_TOKEN)
+bot = telebot.TeleBot(TELEGRAM_BOT_TOKEN)
 
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
