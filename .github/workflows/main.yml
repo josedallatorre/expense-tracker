@@ -1,38 +1,43 @@
-name: ci-cd
+name: publish
 
 on:
   push:
-    branches:
-      - "main"
+    branches: [ "main" ]
+
+env:
+  # Use docker.io for Docker Hub if empty
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.actor }}/tracker-expense:latest
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      -
-        name: Checkout
-        uses: actions/checkout@v3
-      -
-        name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-      -
-        name: Build and push
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/expense-tracker:latest
-      - name: Deploy Stack
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.GL_SSH_HOST }}
-          username: ${{ secrets.GL_SSH_USERNAME }}
-          key: ${{ secrets.GL_SSH_SECRET }}
-          port: ${{ secrets.GL_SSH_PORT }}
+    publish:
+        name: publish image
+        runs-on: ubuntu-latest
+
+        steps:
+        - uses: actions/checkout@v3
+        - name: Login
+          run: |
+            echo ${{ secrets.PAT }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        - name: Build and Publish
+          run: |
+            docker build . --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+            docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
+    deploy:
+        needs: publish
+        name: deploy image
+        runs-on: ubuntu-latest
+
+        steps:
+        - name: install ssh keys
+          # check this thread to understand why its needed:
+          # <https://stackoverflow.com/a/70447517>
+          run: |
+            install -m 600 -D /dev/null ~/.ssh/id_rsa
+            echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+            ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
+        - name: connect and pull
+          run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && docker compose pull && docker compose up -d && exit"
+        - name: cleanup
+          run: rm -rf ~/.ssh
