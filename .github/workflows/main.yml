@@ -1,13 +1,8 @@
-name: publish
+name: ci_cd
 
 on:
   push:
     branches: [ "main" ]
-
-env:
-  # Use docker.io for Docker Hub if empty
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.actor }}/tracker-expense:latest
 
 jobs:
   build:
@@ -33,6 +28,8 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/expense-tracker:latest
+
+
       - name: Deploy Stack
         uses: appleboy/ssh-action@master
         with:
