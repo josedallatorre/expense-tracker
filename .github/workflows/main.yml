@@ -32,7 +32,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/clockbox:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/expense-tracker:latest
       - name: Deploy Stack
         uses: appleboy/ssh-action@master
         with:
@@ -40,20 +40,15 @@ jobs:
           username: ${{ secrets.GL_SSH_USERNAME }}
           key: ${{ secrets.GL_SSH_SECRET }}
           port: ${{ secrets.GL_SSH_PORT }}
-
     deploy:
         needs: publish
         name: deploy image
         runs-on: ubuntu-latest
+
         steps:
         - name: install ssh keys
           # check this thread to understand why its needed:
           # <https://stackoverflow.com/a/70447517>
           run: |
             install -m 600 -D /dev/null ~/.ssh/id_rsa
-            echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-            ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
-        - name: connect and pull
-          run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && docker compose pull && docker compose up -d && exit"
-        - name: cleanup
-          run: rm -rf ~/.ssh
+            echo "${{ secrets.SSH_PRIVATE_KE
