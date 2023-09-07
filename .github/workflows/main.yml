@@ -1,3 +1,8 @@
+name: Deploy in Production
+on:
+  push:
+    branches:
+      - main
 jobs:
   build_and_push:
     runs-on: ubuntu-latest
