@@ -4,21 +4,14 @@ on:
     branches:
       - main
 jobs:
-  build_and_push:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout files
-        uses: actions/checkout@v2
-  
   deploy:
-    needs: build_and_push
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout files
       uses: actions/checkout@v2
         
-    - name: Deploy to Digital Ocean droplet via SSH action
+    - name: Deploy via SSH action
       uses: appleboy/ssh-action@v0.0.7
       with:
         host: ${{ secrets.SSH_HOST }}
