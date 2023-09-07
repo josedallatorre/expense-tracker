@@ -26,7 +26,8 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         passphrase: ${{ secrets.PASSPHRASE }}
         port: 22
-        script: |                            
+        script: |                     
+          cd expense-tracker
           docker compose up -d --build       
     
     - name: Dump docker logs
