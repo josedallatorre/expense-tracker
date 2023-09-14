@@ -14,3 +14,4 @@ services:
       - ".:/usr/src/app/"
     environment:
       NODE_ENV: production
+      DEBUG: nodejs-docker-express:*

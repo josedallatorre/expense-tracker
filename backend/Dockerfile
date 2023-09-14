@@ -12,12 +12,3 @@ ENV NODE_ENV=production
 RUN npm ci
 COPY . .
 CMD ["node", "/bin/www"]
-
-FROM base as dev
-ENV NODE_ENV=development
-RUN npm install -g nodemon 
-RUN npm install
-COPY . .
-#Give the path of your endpoint
-ENTRYPOINT ["nodemon", "/usr/src/app/bin/www"]  
-CMD ["nodemon", "-L", "/bin/www"]
