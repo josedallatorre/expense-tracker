@@ -7,6 +7,8 @@
 ARG PYTHON_VERSION=3.10.12
 FROM python:${PYTHON_VERSION}-slim as base
 
+WORKDIR /usr/src/app/tgbot
+
 # Prevents Python from writing pyc files.
 ENV PYTHONDONTWRITEBYTECODE=1
 
