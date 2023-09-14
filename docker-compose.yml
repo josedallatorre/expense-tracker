@@ -1,0 +1,17 @@
+services:
+  #frontend:
+  #  build:
+   #   context: "./frontend/events"
+    #  dockerfile: "./Dockerfile"
+   # networks:
+    #  - events_net
+  backend:
+    build: ./backend
+    command: npm run start
+    ports:
+      - "3000:3000"
+    volumes: 
+      - ".:/usr/src/app/"
+    environment:
+      NODE_ENV: production
+      DEBUG: nodejs-docker-express:*
