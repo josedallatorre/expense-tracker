@@ -7,11 +7,10 @@ services:
     #  - events_net
   backend:
     build: ./backend
-    command: npm run start:dev
+    command: npm run start
     ports:
       - "3000:3000"
     volumes: 
       - ".:/usr/src/app/"
     environment:
-      NODE_ENV: development
-      DEBUG: nodejs-docker-express:*
+      NODE_ENV: production
