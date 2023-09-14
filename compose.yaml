@@ -9,9 +9,20 @@
 # https://github.com/docker/awesome-compose
 services:
   telegram_bot:
+    build: ./tgbot
     image: josedallatorre/expense-tracker:latest
     env_file:
       - .env
+  backend:
+    build: ./backend
+    command: npm run start:dev
+    ports:
+      - "3000:3000"
+    volumes: 
+      - ".:/usr/src/app/"
+    environment:
+      NODE_ENV: development
+      DEBUG: nodejs-docker-express:*
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to
 # start the database before your application. The `db-data` volume persists the
@@ -44,4 +55,3 @@ services:
 # secrets:
 #   db-password:
 #     file: db/password.txt
-
