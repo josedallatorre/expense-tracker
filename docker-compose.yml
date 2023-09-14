@@ -6,6 +6,12 @@ services:
    # networks:
     #  - events_net
   backend:
-    build:
-      context: "./backend"
-      dockerfile: "./Dockerfile"
+    build: ./backend
+    command: npm run start:dev
+    ports:
+      - "3000:3000"
+    volumes: 
+      - ".:/usr/src/app/"
+    environment:
+      NODE_ENV: development
+      DEBUG: nodejs-docker-express:*
