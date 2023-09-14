@@ -1,3 +1,3 @@
-import tgbot.bot as bot
+import bot as bot
 print("hello world")
 bot.echo_all

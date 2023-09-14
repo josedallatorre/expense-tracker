@@ -1,9 +1,9 @@
 import os
+from pathlib import Path
 import telebot
 from dotenv import load_dotenv
-
-load_dotenv()
-
+dotenv_path= Path('../.env')
+load_dotenv(dotenv_path=dotenv_path)
 TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
 
 
