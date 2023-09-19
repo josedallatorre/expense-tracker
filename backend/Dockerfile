@@ -5,7 +5,7 @@ WORKDIR /usr/src/app/backend
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)
 COPY package*.json ./
-EXPOSE 80
+EXPOSE 3000
 
 FROM base as production
 ENV NODE_ENV=production
