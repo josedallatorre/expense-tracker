@@ -1,4 +1,4 @@
-FROM node:20-slim as base
+FROM node:20-slim
 # Create app directory
 WORKDIR /usr/src/app/backend
 # Install app dependencies
@@ -6,9 +6,7 @@ WORKDIR /usr/src/app/backend
 # where available (npm@5+)
 COPY package*.json ./
 EXPOSE 3000
-
-FROM base as production
-ENV NODE_ENV=production
-RUN npm ci
+RUN npm install
+RUN npm install -g nodemon
 COPY . .
-CMD ["node", "/bin/www"]
+CMD ["npm", "run", "start:dev"]
