@@ -7,6 +7,6 @@ WORKDIR /usr/src/app/backend
 COPY package*.json ./
 EXPOSE 3000
 RUN npm install
-RUN npm install -g nodemon
+#RUN npm install -g nodemon
 COPY . .
-CMD ["npm", "run", "start:dev"]
+CMD ["npm", "run", "start"]
