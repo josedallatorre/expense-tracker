@@ -6,7 +6,6 @@ WORKDIR /usr/src/app/frontend
 # where available (npm@5+)
 COPY package*.json ./
 EXPOSE 3002
-#RUN npm install -g nodemon
 COPY . .
-RUN npm build
-CMD ["npm", "run", "start"]
+#RUN npm build
+CMD ["npm", "run", "dev"]
