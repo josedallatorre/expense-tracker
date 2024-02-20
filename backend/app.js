@@ -10,9 +10,6 @@ const port = 3000
 
 app.use(cors());
 
-app.get("/api/home", (req, res) => {
-  res.json({ message: "Like this video!", people: ["Arpan", "Jack", "Barry"] });
-});
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
@@ -24,6 +21,19 @@ app.get("/api/v1/users", (req, res)=>{
     {id: 2, name: "Joe"},
   ];
   return res.status(200).json({users});
+});
+//create a transaction
+app.post("/transactions", async (req, res) => {
+  try {
+    const { item, price, record_time } = req.body;
+    const newTrans = await pool.query(
+      "INSERT INTO transactions (item, price, record_time) VALUES ($1, $2, $3) RETURNING *",
+      [item, price, record_time]
+    );
+    res.json(newTrans.rows[0]);
+  } catch (error) {
+    console.log(error.message);
+  }
 });
 
 app.listen(port, () => {

@@ -3,15 +3,8 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 async function main() {
-  const user = await prisma.transaction.create({
-    data: {
-        amount: 10.00,
-        authorId: 1,
-        category: "seeding",
-        description: "example description",
-    },
-  })
-  console.log(user)
+    const allUsers = await prisma.user.findMany()
+    console.log(allUsers)
 }
 
 main()
