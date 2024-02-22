@@ -29,4 +29,6 @@ def connect():
     # Close cursor and communication with the database
     cur.close()
     conn.close()
-    print('done')
+    print('created table with psy ')
+
+connect()
