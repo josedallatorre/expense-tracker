@@ -1,4 +1,3 @@
-import csv
 import pandas
 months = ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto']
 for month in months:
