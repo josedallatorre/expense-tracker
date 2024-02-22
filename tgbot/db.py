@@ -29,6 +29,4 @@ def connect():
     # Close cursor and communication with the database
     cur.close()
     conn.close()
-
-connect()
-print('done')
+    print('done')

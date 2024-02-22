@@ -1,11 +1,6 @@
 FROM python:3.9-slim-bullseye
-
-RUN python3 -m venv /opt/venv
-
-# Install dependencies:
+COPY db.py .
 COPY requirements.txt .
-RUN . /opt/venv/bin/activate && pip install -r requirements.txt
-
-# Run the application:
-COPY *.py .
-CMD . /opt/venv/bin/activate && exec python main.py
+RUN pip install -r requirements.txt
+CMD python ./db.py
+# Or enter the name of your unique directory and parameter set.
