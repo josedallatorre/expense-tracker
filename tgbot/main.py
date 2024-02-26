@@ -27,7 +27,7 @@ def insert_csv():
             cur, conn = db.connect()
             db.insert(cur, conn, t1)
             db.close(cur, conn)
-def init_bot()
+def init_bot():
     bot.send_welcome
 init_bot()
 
