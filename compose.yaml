@@ -13,37 +13,8 @@ services:
     image: josedallatorre/wallet-wise-tg-bot:latest
     env_file:
       - .env
-  backend:
-    build: 
-      context: ./backend
-    container_name: backend
-    ports:
-      - '3000:3000'
-    volumes: 
-      - ".:/usr/src/app/"
     depends_on:
-      db:
-        condition: service_healthy
-  frontend:
-    build: 
-      context: ./frontend
-    container_name: frontend
-    ports:
-      - '3002:3002'
-    volumes: 
-      - ".:/usr/src/app/"
-    depends_on:
-      db:
-        condition: service_healthy
-  nginx:
-    restart: always
-    build:
-      context: ./nginx
-    ports:
-      - '80:80'
-    depends_on:
-      - backend
-      - frontend
+      - db
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to
 # start the database before your application. The `db-data` volume persists the
@@ -52,15 +23,16 @@ services:
 # a password of your choosing to it before running `docker compose up`.
   db:
     container_name: postgres
+    build: ./db
     image: postgres
     restart: always
     user: postgres
     secrets:
       - db-password
-    volumes:
+    volumes: 
       - db-data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=example
+      - POSTGRES_DB=expensetracker
       - POSTGRES_PASSWORD_FILE=/run/secrets/db-password
     ports:
       - 3001:5432
