@@ -19,11 +19,18 @@ def connect():
                             port = 5432)
     cur = conn.cursor()
     return cur, conn
-def insert(cur, conn, t):
+def insert_transaction(cur, conn, t):
     cur.execute("insert into TRANSACTION values(DEFAULT, %s,%s,%s,%s)", t)
-    print("Data dynamiccaly Inserted")
+    print("Transaction Inserted")
     # Make the changes to the database persistent
     conn.commit()
+
+def insert_client(cur, conn, t):
+    cur.execute("insert into CLIENT values(%s,%s)", t)
+    print("Client Inserted")
+    # Make the changes to the database persistent
+    conn.commit()
+
 
 def close(cur, conn):
     # Close cursor and communication with the database

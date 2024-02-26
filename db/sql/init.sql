@@ -1,7 +1,7 @@
 CREATE SCHEMA expense;
 
 CREATE TABLE CLIENT (
-    user_id SERIAL PRIMARY KEY,
+    user_id INT PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL
 );
 
@@ -14,4 +14,4 @@ CREATE TABLE TRANSACTION (
     FOREIGN KEY (user_id) REFERENCES CLIENT (user_id)
 );
 
-INSERT INTO CLIENT(username) VALUES ('test');
+INSERT INTO CLIENT(user_id,username) VALUES (1,'test');
