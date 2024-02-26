@@ -7,8 +7,9 @@ from psycopg2.extensions import register_adapter, AsIs
 register_adapter(np.int64, AsIs)
 print("hello world")
 
-months = ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto']
+months = ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto', 'Settembre','Ottobre','Novembre','Dicembre']
 for month in months:
+    print(month)
     df = csv_reader.open_csv(month=month)
     df_cleaned = csv_reader.clean_df(df)
     n_rows = df_cleaned.__len__()
