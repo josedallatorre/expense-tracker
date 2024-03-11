@@ -70,7 +70,7 @@ def handle_document(message):
 			date_object = datetime.strptime(data, '%d/%m/%Y').date()
 			a = t[1].item()
 			descr = t[2]
-			user_id = 1
+			user_id = message.from_user.id
 			print(type(date_object))
 			print(date_object)  # printed in default format
 			print(a, type(a))
