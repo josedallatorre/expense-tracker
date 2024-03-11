@@ -1,6 +1,6 @@
 import pandas
-def open_csv(month):
-    with open('Bilancino - '+month+'.csv', newline='') as csvfile:
+def open_csv(file):
+    with open(file=file, newline='') as csvfile:
         df = pandas.read_csv(csvfile)
     return df
 
