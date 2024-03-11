@@ -8,6 +8,7 @@ register_adapter(np.int64, AsIs)
 
 def init_bot():
     bot.send_welcome
+
 init_bot()
 
 

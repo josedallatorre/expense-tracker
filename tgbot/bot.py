@@ -75,8 +75,10 @@ def handle_document(message):
 			print(date_object)  # printed in default format
 			print(a, type(a))
 			t1 = (date_object.isoformat(), a, descr, user_id)
+			bot.reply_to(message, "Inserting with date: " + str(data)+ " amount " + str(a)+ " with description " + str(descr))
 			cur, conn = db.connect()
 			db.insert_transaction(cur, conn, t1)
 			db.close(cur, conn)
+			bot.reply_to(message, "Inserted correctly")
 
 bot.infinity_polling()
