@@ -32,7 +32,7 @@ jobs:
         name: Build and push backend
         uses: docker/build-push-action@v4
         with:
-          context: backend/
-          file: backend/Dockerfile
+          context: db/
+          file: db/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/wallet-wise-backend:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/wallet-wise-db:latest
